@@ -42,6 +42,7 @@ const ConferenceEvent = () => {
     };
 
     const handleMealSelection = (index) => {
+        /*//This is the original code, and mealForPeople is not defined elsewhere in the entire project, maybe an additional feature that was discontinued...
         const item = mealsItems[index];
         if (item.selected && item.type === "mealForPeople") {
             // Ensure numberOfPeople is set before toggling selection
@@ -51,6 +52,8 @@ const ConferenceEvent = () => {
         else {
             dispatch(toggleMealSelection(index));
         }
+        */
+        dispatch(toggleMealSelection(index));
     };
 
     const calculateTotalCost = (section) => {
@@ -92,20 +95,28 @@ const ConferenceEvent = () => {
             }
         });
         avItems.forEach((item) => {
+            /*Original code, simplifying redundant if conditions since items array is always initialized to []
             if (
                 item.quantity > 0 &&
                 !items.some((i) => i.name === item.name && i.type === "av")
             ) {
                 items.push({ ...item, type: "av" });
             }
+            */
+            if (item.quantity > 0) {
+                items.push({...item, type: "av"});
+            }
         });
         mealsItems.forEach((item) => {
             if (item.selected) {
+                /*Original code, no property named "numberOfPeople" in each item object, thus below if condition is always falsy, removing this code...
                 const itemForDisplay = { ...item, type: "meals" };
                 if (item.numberOfPeople) {
                     itemForDisplay.numberOfPeople = numberOfPeople;
                 }
-            items.push(itemForDisplay);
+                items.push(itemForDisplay);
+                */
+                items.push({...item, type: "meals"});
             }
         });
     return items;
@@ -133,10 +144,16 @@ const ConferenceEvent = () => {
                                 <td>{item.name}</td>
                                 <td>${item.cost}</td>
                                 <td>
-                                    {item.type === "meals" || item.numberOfPeople ? `For ${numberOfPeople} person/s` : item.quantity}
+                                    {/*Original code, item.numberOfPeople is always falsy
+                                    item.type === "meals" || item.numberOfPeople ? `For ${numberOfPeople} person/s` : item.quantity
+                                    */}
+                                    {item.type === "meals" ? `For ${numberOfPeople} person/s` : item.quantity}
                                 </td>
                                 <td>
-                                    {item.type === "meals" || item.numberOfPeople ? `${item.cost * numberOfPeople}` : `${item.cost * item.quantity}`}
+                                    {/*Original code, item.numberOfPeople is always falsy
+                                    item.type === "meals" || item.numberOfPeople ? `${item.cost * numberOfPeople}` : `${item.cost * item.quantity}`
+                                    */}
+                                    {item.type === "meals" ? `${item.cost * numberOfPeople}` : `${item.cost * item.quantity}`}
                                 </td>
                             </tr>
                         ))}
