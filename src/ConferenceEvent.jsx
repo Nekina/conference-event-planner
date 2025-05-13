@@ -22,9 +22,10 @@ const ConferenceEvent = () => {
     };
 
     const handleAddToCart = (index) => {
+        /*Original code, qty check is done in reducer function
         if (venueItems[index].name === "Auditorium Hall (Capacity:200)" && venueItems[index].quantity >= 3) {
           return; 
-        }
+        }*/
         dispatch(incrementQuantity(index));
       };
     
@@ -227,8 +228,9 @@ const ConferenceEvent = () => {
         ) : (
           <div className="button_container">
            <button
-              className={venueItems[index].quantity ===0 ? " btn-warning btn-disabled" : "btn-warning btn-plus"}
+              className={venueItems[index].quantity === 0 ? " btn-warning btn-disabled" : "btn-warning btn-plus"}
               onClick={() => handleRemoveFromCart(index)}
+              disabled={venueItems[index].quantity === 0}
             >
                &#8211;
             </button>
@@ -236,8 +238,9 @@ const ConferenceEvent = () => {
               {venueItems[index].quantity > 0 ? ` ${venueItems[index].quantity}` : "0"}
             </span>
             <button
-              className={venueItems[index].quantity === 10 ? " btn-success btn-disabled" : "btn-success btn-plus"}
+              className={venueItems[index].quantity === venueItems[index].max_qty ? " btn-success btn-disabled" : "btn-success btn-plus"}
               onClick={() => handleAddToCart(index)}
+              disabled={venueItems[index].quantity === venueItems[index].max_qty}
             >
              &#43;
             </button>
@@ -270,9 +273,19 @@ const ConferenceEvent = () => {
     <div className="text"> {item.name} </div>
     <div> ${item.cost} </div>
         <div className="addons_btn">
-            <button className="btn-warning" onClick={() => handleDecrementAvQuantity(index)}> &ndash; </button>
+            <button
+                className={avItems[index].quantity === 0 ? " btn-warning btn-disabled" : "btn-warning btn-plus"}
+                onClick={() => handleDecrementAvQuantity(index)}
+                disabled={avItems[index].quantity === 0}>
+                    &ndash;
+            </button>
             <span className="quantity-value">{item.quantity}</span>
-            <button className="btn-success" onClick={() => handleIncrementAvQuantity(index)}> &#43; </button>
+            <button
+                className={avItems[index].quantity === avItems[index].max_qty ? " btn-success btn-disabled" : "btn-success btn-plus"}
+                onClick={() => handleIncrementAvQuantity(index)}
+                disabled={avItems[index].quantity === avItems[index].max_qty}>
+                    &#43;
+            </button>
         </div>
     </div>
 ))}
