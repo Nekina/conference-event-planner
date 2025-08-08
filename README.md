@@ -1,6 +1,7 @@
 # Conference Event Planner
 
-A simple React-based web application for planning conferences and events, deployed via GitHub Pages.
+A simple React-based web application for planning conferences and events, deployed via GitHub Pages.  
+Check it out in this link: [https://nekina.github.io/conference-event-planner/](https://nekina.github.io/conference-event-planner/)
 
 ## Features
 - Create, edit, and delete events with date, time, and venue details
